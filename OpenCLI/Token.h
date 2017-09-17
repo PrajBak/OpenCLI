@@ -1,15 +1,21 @@
 #pragma once
 #include<iomanip>
+#include<iostream>
 #include<string>
 #include<stack>
-#include<queue>
+#include<deque>
+#include<vector>
+#include<sstream>
 
 namespace myCalc {
 
 	class Token
 	{
+	public:
 		int mTokenPriority;
-		std::string mTokenSymbol;
+		int mTokenValue;
+		int mTokenParameter;
+		char mTokenSymbol;
 		enum tokenType
 		{
 			Nothing,
@@ -33,11 +39,14 @@ namespace myCalc {
 			mTokenType = Nothing;
 			mTokenAssoc = Left;
 			mTokenPriority = 0;
-			mTokenSymbol = "";
+			mTokenValue = 0;
+			int mTokenParameter = 0;
 		}
 
-		Token stringToToken(std::string str);
-
+		static Token stringToToken(const std::string& str);
+		static std::vector<Token> Tokenise(std::string& expression);
+		static Token EvaluateOperator(const Token& T, std::vector<Token>& arguments);
+		static double EvaluateExpression(const std::deque<Token>& tokens);
 	};
 
 }

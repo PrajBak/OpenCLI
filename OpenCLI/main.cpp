@@ -1,10 +1,12 @@
 #include<iostream>
 #include<iomanip>
-#include<string>
-#include<vector>
+#include"Token.h"
 #include<cstdio>
 #include<sstream>
 
+bool vectorToString(std::string& myString, std::vector<std::string>& myVector);
+
+using namespace myCalc;
 
 int main()
 {
@@ -25,8 +27,12 @@ int main()
 			symbols.push_back(symbol);
 		}
 
-		if (symbols[0] == "quit") {
+		if (symbol == "quit") {
 			running = false;
+		}
+
+		else if (symbols[0] == "") {
+			continue;
 		}
 		else if (symbols[0] == "notepad") {
 			system("notepad");
@@ -45,6 +51,31 @@ int main()
 		else if (symbols[0] == "shutdown") {
 			system("shutdown -s");
 		}
+		else if (symbols[0] == "calculate") {
+
+			std::string myString;
+			vectorToString(myString, symbols);
+			Token token;
+			stringToToken(myString);
+		}
 	}
 	return 0;
+}
+
+// FUNCTION TO CONVERT A VECTOR OF STRINGS BACK TO A STRING(WILL NOT COPY THE FIRST ELEMENT)
+bool vectorToString(std::string& myString, std::vector<std::string>& myVector)
+{
+	auto length = myVector.size();
+
+	if (length == 1)
+		return false;
+
+	for (auto i = 1; i<length; ++i)
+	{
+		myString += myVector[i];
+		if (i != (length - 1))
+			myString += " ";
+	}
+
+	return true;
 }
