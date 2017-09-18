@@ -5,6 +5,7 @@
 #include<sstream>
 
 bool vectorToString(std::string& myString, std::vector<std::string>& myVector);
+void stringToString(std::string& str);
 
 using namespace myCalc;
 
@@ -18,6 +19,10 @@ int main()
 		std::cout << "> ";
 
 		std::getline(std::cin, input);
+
+		if (input.empty())
+			continue;
+
 		std::stringstream parse(input);
 
 		std::vector<std::string> symbols;
@@ -55,8 +60,10 @@ int main()
 
 			std::string myString;
 			vectorToString(myString, symbols);
-			Token token;
-			stringToToken(myString);
+			stringToString(myString);
+			const std::vector<Token> myVec = Token::Tokenise(myString);
+			std::deque<Token> myQueue = Token::shuntingYard(myVec);
+			std::cout << "RESULT : "<< Token::EvaluateExpression(myQueue)<<std::endl;
 		}
 	}
 	return 0;
@@ -66,16 +73,16 @@ int main()
 bool vectorToString(std::string& myString, std::vector<std::string>& myVector)
 {
 	auto length = myVector.size();
-
-	if (length == 1)
+	if (length == 0 || length == 1)
 		return false;
 
 	for (auto i = 1; i<length; ++i)
-	{
 		myString += myVector[i];
-		if (i != (length - 1))
-			myString += " ";
-	}
-
 	return true;
+}
+
+void stringToString(std::string& str) 
+{
+	for (auto i = 0; i < str.size(); i+=2)
+			str.insert(i + 1, " ");
 }

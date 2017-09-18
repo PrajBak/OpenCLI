@@ -4,56 +4,67 @@ using namespace myCalc;
 
 Token Token::stringToToken(const std::string& str){
 	Token token;
-
-	if (isdigit(std::stod(str))) {
-		token.mTokenType = Token::Number;
-		token.mTokenValue = std::stod(str);
+	double value = 0;
+	try {
+		value = std::stod(str);
 	}
-	else if (str == "(")
-		token.mTokenType = Token::leftBraces;
-	else if (str == ")")
-		token.mTokenType = Token::rightBraces;
-	else if (str == "(")
-		token.mTokenType = Token::leftBraces;
-	else
-	{
-		if (str == "+") {
-			token.mTokenType = Token::Operator;
-			token.mTokenAssoc = Token::Left;
-			token.mTokenPriority = 10;
-			token.mTokenSymbol = '+';
-			token.mTokenParameter = 2;
+	catch (std::invalid_argument inv) {
+
+		if (str == "(") {
+			token.mTokenType = Token::leftBraces;
+			return token;
 		}
-		else if (str == "-") {
-			token.mTokenType = Token::Operator;
-			token.mTokenAssoc = Token::Left;
-			token.mTokenPriority = 10;
-			token.mTokenSymbol = '-';
-			token.mTokenParameter = 2;
+		else if (str == ")") {
+			token.mTokenType = Token::rightBraces;
+			return token;
 		}
-		else if (str == "*") {
-			token.mTokenType = Token::Operator;
-			token.mTokenAssoc = Token::Left;
-			token.mTokenPriority = 20;
-			token.mTokenSymbol = '*';
-			token.mTokenParameter = 2;
-		}
-		else if (str == "/") {
-			token.mTokenType = Token::Operator;
-			token.mTokenAssoc = Token::Left;
-			token.mTokenPriority = 20;
-			token.mTokenSymbol = '/'; 
-			token.mTokenParameter = 2;
-		}
-		else if (str == "^") {
-			token.mTokenType = Token::Operator;
-			token.mTokenAssoc = Token::Left;
-			token.mTokenPriority = 30;
-			token.mTokenSymbol = '^';
-			token.mTokenParameter = 2;
+		else
+		{
+			if (str == "+") {
+				token.mTokenType = Token::Operator;
+				token.mTokenAssoc = Token::Left;
+				token.mTokenPriority = 10;
+				token.mTokenSymbol = '+';
+				token.mTokenParameter = 2;
+				return token;
+			}
+			else if (str == "-") {
+				token.mTokenType = Token::Operator;
+				token.mTokenAssoc = Token::Left;
+				token.mTokenPriority = 10;
+				token.mTokenSymbol = '-';
+				token.mTokenParameter = 2;
+				return token;
+			}
+			else if (str == "*") {
+				token.mTokenType = Token::Operator;
+				token.mTokenAssoc = Token::Left;
+				token.mTokenPriority = 20;
+				token.mTokenSymbol = '*';
+				token.mTokenParameter = 2;
+				return token;
+			}
+			else if (str == "/") {
+				token.mTokenType = Token::Operator;
+				token.mTokenAssoc = Token::Left;
+				token.mTokenPriority = 20;
+				token.mTokenSymbol = '/'; 
+				token.mTokenParameter = 2;
+				return token;
+			}
+			else if (str == "^") {
+				token.mTokenType = Token::Operator;
+				token.mTokenAssoc = Token::Left;
+				token.mTokenPriority = 30;
+				token.mTokenSymbol = '^';
+				token.mTokenParameter = 2;
+				return token;
+			}
 		}
 	}
 
+	token.mTokenType =	Token::Number;
+	token.mTokenValue = value;
 	return token;
 }
 
@@ -84,7 +95,7 @@ std::vector<Token> Token::Tokenise(std::string& expression){
 	return tokens;
 }
 
-std::deque<Token> shuntingYard(const std::vector<Token>& tokens) {
+std::deque<Token> Token::shuntingYard(const std::vector<Token>& tokens) {
 
 	int index = 0;
 	std::deque<Token> outputQueue;
@@ -228,7 +239,7 @@ double Token::EvaluateExpression(const std::deque<Token>& tokens) {
 					operandStack.pop_back();
 				}
 
-				operandStack.push_back(EvaluateOperator(T, operands));
+				operandStack.push_back(Token::EvaluateOperator(T, operands));
 			}
 		}
 		index++;

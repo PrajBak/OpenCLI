@@ -13,7 +13,7 @@ namespace myCalc {
 	{
 	public:
 		int mTokenPriority;
-		int mTokenValue;
+		double mTokenValue;
 		int mTokenParameter;
 		char mTokenSymbol;
 		enum tokenType
@@ -47,6 +47,7 @@ namespace myCalc {
 		static std::vector<Token> Tokenise(std::string& expression);
 		static Token EvaluateOperator(const Token& T, std::vector<Token>& arguments);
 		static double EvaluateExpression(const std::deque<Token>& tokens);
+		static std::deque<Token> shuntingYard(const std::vector<Token>& tokens);
 	};
 
 }
