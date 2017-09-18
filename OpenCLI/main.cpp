@@ -85,9 +85,13 @@ void stringToString(std::string& str)
 {
 	for (auto i = 0; i < str.size();){
 		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '^' || str[i] == '(' || str[i] == ')') {
-			
-			str.insert(i + 1, 1, ' ');
-			str.insert(i, 1, ' ');
+			if (i == 0) 			
+				str.insert(i + 1, 1, ' ');
+			else {
+				str.insert(i + 1, 1, ' ');
+				str.insert(i, 1, ' ');
+			}
+
 			i += 2;
 		}
 		i++;
