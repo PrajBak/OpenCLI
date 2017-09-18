@@ -6,6 +6,8 @@
 #include<deque>
 #include<vector>
 #include<sstream>
+#include<algorithm>
+#include<cstdio>
 
 namespace myCalc {
 

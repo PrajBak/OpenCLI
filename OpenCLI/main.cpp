@@ -1,8 +1,4 @@
-#include<iostream>
-#include<iomanip>
 #include"Token.h"
-#include<cstdio>
-#include<sstream>
 
 bool vectorToString(std::string& myString, std::vector<std::string>& myVector);
 void stringToString(std::string& str);
@@ -59,11 +55,15 @@ int main()
 		else if (symbols[0] == "calculate") {
 
 			std::string myString;
-			vectorToString(myString, symbols);
-			stringToString(myString);
-			const std::vector<Token> myVec = Token::Tokenise(myString);
-			std::deque<Token> myQueue = Token::shuntingYard(myVec);
-			std::cout << "RESULT : "<< Token::EvaluateExpression(myQueue)<<std::endl;
+			if (vectorToString(myString, symbols))
+			{
+				stringToString(myString);
+				const std::vector<Token> myVec = Token::Tokenise(myString);
+				std::deque<Token> myQueue = Token::shuntingYard(myVec);
+				std::cout << "RESULT : "<< Token::EvaluateExpression(myQueue)<<std::endl;
+			}
+			
+			else std::cout << "[ERROR] : ENTER AN EXPRESSION NEXT TIME" << std::endl;
 		}
 	}
 	return 0;
@@ -83,6 +83,26 @@ bool vectorToString(std::string& myString, std::vector<std::string>& myVector)
 
 void stringToString(std::string& str) 
 {
-	for (auto i = 0; i < str.size(); i+=2)
-			str.insert(i + 1, " ");
+	for (auto i = 0; i < str.size();){
+		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '^' || str[i] == '(' || str[i] == ')') {
+			
+			str.insert(i + 1, 1, ' ');
+			str.insert(i, 1, ' ');
+			i += 2;
+		}
+		i++;
+	}
+
+	char symbol = ' ';
+
+	str.erase(
+		std::unique(
+			str.begin(),
+			str.end(),
+			[symbol](char l, char r) -> bool {
+		return (l == symbol) && (l == r);
+			}
+		),
+		str.end()
+			);
 }
