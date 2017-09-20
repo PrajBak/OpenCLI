@@ -1,12 +1,14 @@
 #include"Token.h"
 #include<Windows.h>
 #include<experimental\filesystem>
+#include"FileMan.h"
 #define MAX_BUFFER_LENGTH 100
 
 bool vectorToString(std::string& myString, std::vector<std::string>& myVector);
 void stringToString(std::string& str);
 
-using namespace myCalc;
+using namespace OpenClI::myCalc;
+using namespace OpenCLI::FileMan;
 
 int main()
 {
@@ -56,7 +58,10 @@ int main()
 			std::cout << "Result: " << (a + b) << std::endl;
 		}
 		else if (symbols[0] == "manual") {
-			system("notepad manual.txt");
+			FileMan F("manual.txt");
+			std::cout << std::endl;
+			if(!F.init())
+				std::cout << "[ERROR] : UNABLE TO FIND MANUAL FILE" << std::endl;
 		}
 		else if (symbols[0] == "shutdown") {
 			system("shutdown -s");

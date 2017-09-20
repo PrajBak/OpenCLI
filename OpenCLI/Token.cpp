@@ -1,6 +1,6 @@
 #include"Token.h"
 
-using namespace myCalc;
+using namespace OpenClI::myCalc;
 
 Token Token::stringToToken(const std::string& str){
 	Token token;
