@@ -1,8 +1,12 @@
-This is the manual for OpenCLI
+                                        This is the manual for OpenCLI
 
 SNO.         Command          Usage
  
- 1.	      quit            It is used to exit/quit the CLI terminal.
+ 1.	      quit/exit       Exits/Quits the CLI terminal.
  2.           notepad         Opens a Microsoft Notepad.
  3.	      paint	      Opens a Microsoft Paint Application.
  4.	      shutdown	      Shutsdown the host machine.
+ 5.	      chdir/cd	      Changes the directory to the one specified after the "chdir" or "cd" command.
+ 6.	      pwd  	      Displays the current working directory.
+ 7.	      calculate	      Calculates the expression specified after the "calculate" command.
+ 8.	      ls	      Gives a list of all the files/directories within the pwd.
