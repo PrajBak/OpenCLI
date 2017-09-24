@@ -1,4 +1,5 @@
 #pragma once
+#define _USE_MATH_DEFINES
 #include<iomanip>
 #include<iostream>
 #include<string>
@@ -8,6 +9,7 @@
 #include<sstream>
 #include<algorithm>
 #include<cstdio>
+#include<math.h>
 
 namespace OpenClI {
 
@@ -19,14 +21,14 @@ namespace OpenClI {
 			int mTokenPriority;
 			double mTokenValue;
 			int mTokenParameter;
-			char mTokenSymbol;
+			std::string mTokenSymbol;
 			enum tokenType
 			{
 				Nothing,
 				Operator,
 				Number,
 				leftBraces,
-				rightBraces
+				rightBraces,
 			};
 			enum tokenAssociavity
 			{

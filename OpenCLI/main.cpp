@@ -69,15 +69,15 @@ int main()
 		else if (symbols[0] == "calculate") {
 
 			std::string myString;
-			if (vectorToString(myString, symbols))
+			if(!vectorToString(myString, symbols))
+				std::cout << "[ERROR] : ENTER AN EXPRESSION NEXT TIME" << std::endl;
+			else
 			{
 				stringToString(myString);
 				const std::vector<Token> myVec = Token::Tokenise(myString);
 				std::deque<Token> myQueue = Token::shuntingYard(myVec);
 				std::cout << "RESULT : "<< Token::EvaluateExpression(myQueue)<<std::endl;
 			}
-			
-			else std::cout << "[ERROR] : ENTER AN EXPRESSION NEXT TIME" << std::endl;
 		}
 		else if (symbols[0] == "chdir" || symbols[0] == "cd") {
 			std::string myString;
@@ -144,6 +144,7 @@ void stringToString(std::string& str)
 			}
 
 			i += 2;
+			continue;
 		}
 		i++;
 	}
